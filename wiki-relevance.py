@@ -4,6 +4,7 @@
 import sys
 import requests
 import urllib
+import math
 
 # 本文取得
 def gethtml(argv):
@@ -67,6 +68,13 @@ def cal_relevance(link1,link2):
         return float(upper) / bottom
     else :
         return 0
+
+#logを取る
+def cal_log(rel):
+    if rel != 0 :
+        return math.log10(1/rel)
+    else:
+        return 0
 #-------main--------------------
 if __name__ == '__main__' :
     lines=[]
@@ -86,6 +94,9 @@ if __name__ == '__main__' :
 
     #リンク一致度計算
     rel=cal_relevance(linklist1,linklist2)
+    # print(rel)
 
-    print(rel)
+    #リンク一致度計算2
+    logrel=cal_log(rel)
+    print(logrel)
     # print(1.0 - rel)

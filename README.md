@@ -1,11 +1,11 @@
-wiki_relevance.py
+wiki\_relevance.py (wiki\_relevance\_module.py)
 -------
-
 
 ##概要
 ２つのwikipediaのページの関連度を計算します。  
 声優同士の関連度の計算が目的。  
-声優以外のワードでも可能?
+声優以外のワードでも可能?  
+wiki\_relevance\_module.pyはこのプログラムをモジュール化したものです。  
 
 ##実行
 
@@ -22,104 +22,61 @@ $python3 wiki_relevance.py "声優1" "声優2"
  - 単純に同じワードが多いほうが関連度は大きくなります。
  
  - 単語ごとに重みをつけたほうが良いかも。
- - ~~ あと、ページ間で最短何リンクでたどり着けるかを考慮したほうが良いかも。 ~~  
- 最短リンク数は声優を2つページを声優と仮定しているので1、2くらいにはなるはず。大きな影響は与えないだろう。  
+ - ~~あと、ページ間で最短何リンクでたどり着けるかを考慮したほうが良いかも。~~  
+ 最短リンク数は声優を2つページを声優と仮定しているので1、2くらいにはなるはずなので、これはとりあえず無視。  
  - いろいろ先行研究があるので、それを加えてみる。  
  - そのままでは関連度の値が小さいので規格化したほうが良いかも。  
  - wikipediaからアニメ作品の情報を持ってくるプログラムからキャストを取ってきて、  
-  このプログラムに渡し、解析まで自動化したい。
-
+ このプログラムに渡し、解析まで自動化したい。  
+ →MDSまでは自動化完了
+  
+  
 ##実行結果
 
 ```
-$ python3 wiki-relevance.py "悠木碧" "斎藤千和"  
+$ python3 wiki\_relevance.py "悠木碧" "斎藤千和"  
 0.0682800345721694  
   
-$ python3 wiki-relevance.py "悠木碧" "悠木碧"  
+$ python3 wiki\_relevance.py "悠木碧" "悠木碧"  
 1.0  
   
-$ python3 wiki-relevance.py "悠木碧" "喜多村英梨"  
+$ python3 wiki\_relevance.py "悠木碧" "喜多村英梨"  
 0.08037825059101655  
   
-$ python3 wiki-relevance.py "悠木碧" "水橋かおり"  
+$ python3 wiki\_relevance.py "悠木碧" "水橋かおり"  
 0.04866412213740458  
   
-$ python3 wiki-relevance.py "杉田智和" "中村悠一"  
+$ python3 wiki\_relevance.py "杉田智和" "中村悠一"  
 0.1028533510285335  
   
-$ python3 wiki-relevance.py "茅野愛衣" "島本須美"  
- 0.012263099219620958  
+$ python3 wiki\_relevance.py "茅野愛衣" "島本須美"  
+0.012263099219620958  
  ```
 
 関連度は低そうな人同士では0.01、関連度が高そうな人同士でも0.1となり、  
 おおよそこのくらいの範囲に収まる模様。  
 関連度の最大値は１になります。  
-
-wiki-relevance-anime-title.py
--------
-
-##概要
-wiki-relevance.pyと同様に、２つのwikipediaのページの関連度を計算します。  
-wiki-relevance.pyでは、本文すべてのリンクを抽出してましたが、  
-本プログラムは抽出リンクを出演作品(アニメ)からのみに限定してます。
-
-##実行
-
-```
-$python3 wiki-relevance-anime-title.py "声優1" "声優2"
-```
-
-声優を2人入力すると、それぞれの関連度を求めます。
-
-##note
-
-- 声優同士の出演作品が被っているほど関連度は大きくなります。  
-- wiki-relevance-anime-title.pyと同様に、そのままでは関連度の値が小さいので規格化したほうが良いかも。  
-
-##実行結果
-
-```
-$ python3 wiki-relevance-anime-title.py "悠木碧" "斎藤千和"  
-0.049342105263157895  
   
-$ python3 wiki-relevance-anime-title.py "悠木碧" "悠木碧"  
-1.0  
   
-$ python3 wiki-relevance-anime-title.py "悠木碧" "喜多村英梨"  
- 0.0625  
-  
-$ python3 wiki-relevance-anime-title.py "悠木碧" "水橋かおり"  
- 0.028708133971291867  
-   
-$ python3 wiki-relevance-anime-title.py "杉田智和" "中村悠一"  
-0.09064327485380116  
-  
-$ python3 wiki-relevance-anime-title.py "茅野愛衣" "島本須美"  
-0.014705882352941176  
-```
-
-wiki-relevance.pyの結果とそんな変わらないように見える。  
-出演作品から類似声優を見つけたいなら、こっちのほうが正確かもしれません。  
-
 ##実行結果(追加)
 
 ```
- python3 wiki-relevance.py "悠木碧" "斎藤千和"  
- 1.166830897936477  
+$ python3 wiki\_relevance.py "悠木碧" "斎藤千和"  
+1.166830897936477  
    
-python3 wiki-relevance.py "悠木碧" "悠木碧"  
+$ python3 wiki\_relevance.py "悠木碧" "悠木碧"  
 0.0  
   
-python3 wiki-relevance.py "悠木碧" "喜多村英梨"  
+$ python3 wiki\_relevance.py "悠木碧" "喜多村英梨"  
 1.091308325848836  
   
-python3 wiki-relevance.py "悠木碧" "水橋かおり"  
+$ python3 wiki\_relevance.py "悠木碧" "水橋かおり"  
 1.3140325399303059  
   
-python3 wiki-relevance.py "杉田智和" "中村悠一"  
+$ python3 wiki\_relevance.py "杉田智和" "中村悠一"  
 0.9877815541443403  
   
-python3 wiki-relevance.py "茅野愛衣" "島本須美"  
+$ python3 wiki\_relevance.py "茅野愛衣" "島本須美"  
 1.9128498242810998  
 ```
 
@@ -127,8 +84,108 @@ python3 wiki-relevance.py "茅野愛衣" "島本須美"
  - 類似度の逆数を対数変換してます。  
  - 逆数なので声優間の類似度というより、距離(非類似度)となります。  
  - 見やすくなった気もしないこともない。  
+  
+  
+  
+  
+  
+wiki\_relevance\_anime\_title.py
+-------
 
-wiki-vc-decate.py
+##概要
+wiki\_relevance.pyと同様に、２つのwikipediaのページの関連度を計算します。  
+wiki\_relevance.pyでは、本文すべてのリンクを抽出してましたが、  
+本プログラムは抽出リンクを出演作品(アニメ)からのみに限定してます。
+
+##実行
+
+```
+$python3 wiki_relevance_anime_title.py "声優1" "声優2"
+```
+
+声優を2人入力すると、それぞれの関連度を求めます。
+
+##note
+
+- 声優同士の出演作品が被っているほど関連度は大きくなります。  
+- wiki\_relevance\_anime\_title.pyと同様に、そのままでは関連度の値が小さいので規格化したほうが良いかも。  
+
+##実行結果
+
+```
+$ python3 wiki\_relevance\_anime\_title.py "悠木碧" "斎藤千和"  
+0.049342105263157895  
+  
+$ python3 wiki\_relevance\_anime\_title.py "悠木碧" "悠木碧"  
+1.0  
+  
+$ python3 wiki\_relevance\_anime\_title.py "悠木碧" "喜多村英梨"  
+0.0625  
+  
+$ python3 wiki\_relevance\_anime\_title.py "悠木碧" "水橋かおり"  
+0.028708133971291867  
+   
+$ python3 wiki\_relevance\_anime\_title.py "杉田智和" "中村悠一"  
+0.09064327485380116  
+  
+$ python3 wiki\_relevance\_anime\_title.py "茅野愛衣" "島本須美"  
+0.014705882352941176  
+```
+
+wiki\_relevance.pyの結果とそんな変わらないように見える。  
+出演作品から類似声優を見つけたいなら、こっちのほうが正確かもしれません。  
+  
+  
+  
+  
+mds.py
+-------
+
+##概要
+声優同士の関連度を多次元尺度構成法(MDS)を用いて  
+グラフを描写します。  
+wiki_relevance.pyの結果を用いています。  
+  
+  
+##モジュール
+- make\_matrix.py
+MDSに必要な行列を計算します。  
+- wiki\_relevance\_module.py
+声優同士の距離を求めます。  
+
+##実行例
+make\_matrix.pyに関連度を計算したい声優を渡す。  
+(とりあえずプログラムに直接書き込む方法)  
+今回は以下の声優を与える。  
+["悠木碧","斎藤千和","喜多村英梨","水橋かおり","野中藍","加藤英美里"]
+
+##実行  
+
+```
+$python3 mds.py
+```
+
+##結果
+結果表示のあと、./figure ディレクトリにグラフが生成される  
+
+<img src="figure/mds_test.png" width="500px">
+
+ - 声優間の距離が近い声優ほど近くに配置されます。  
+ - プロットされたそれぞれの点の位置関係を見るものなので、  
+縦軸、横軸は気にしないでください。  
+
+ - グラフのラベルは、与えた声優の順番に対応してます。  
+今回は、["悠木碧","斎藤千和","喜多村英梨","水橋かおり","野中藍","加藤英美里"]を与えたので、  
+悠木碧=0, 斎藤千和=1, 喜多村英梨=2, ..... ,  
+となります。  
+ - ちょっと数が少ないので、もう少し与える声優の数を増やしてみます。
+ - pythonの遅さが目立ってきた....
+  
+  
+  
+  
+  
+wiki\_vc\_active.py
 -------
 
 ##概要
@@ -138,7 +195,7 @@ wiki-vc-decate.py
 ##実行
 
 ```
-$python3 wiki-relevance-anime-title.py "声優"
+$python3 wiki_vc_active.py "声優"
 ```
 
 ##note
@@ -151,7 +208,7 @@ $python3 wiki-relevance-anime-title.py "声優"
 ##実行結果
  
 ```
-python3 wiki-vc-decate.py "坂本真綾"  
+$ python3 wiki\_vc\_decate.py "坂本真綾"  
 1996.0 4.0  
 1998.0 6.0  
 1999.0 6.0  
@@ -170,7 +227,7 @@ python3 wiki-vc-decate.py "坂本真綾"
 2013.0 6.0  
 2014.0 11.0
   
-python3 wiki-vc-decate.py "島本須美"  
+$ python3 wiki\_vc\_decate.py "島本須美"  
 1979.0 5.0  
 1980.0 5.0  
 1981.0 1.0  
@@ -207,7 +264,7 @@ python3 wiki-vc-decate.py "島本須美"
 2012.0 2.0  
 2013.0 4.0  
   
- python3 wiki-vc-decate.py "茅野愛衣"  
+$ python3 wiki\_vc\_decate.py "茅野愛衣"  
 2010.0 3.0  
 2011.0 34.0  
 2012.0 36.0  
@@ -216,5 +273,9 @@ python3 wiki-vc-decate.py "島本須美"
 2015.0 35.0  
   
 ```
-
-一応どの年代の人のデータも取ってこれる模様。  
+  
+ - 一応どの年代の人のデータも取ってこれる模様。  
+ - あとは、分布間の距離でも比較したらなんかでそう。  
+  
+  
+  

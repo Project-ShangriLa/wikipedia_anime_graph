@@ -69,7 +69,7 @@ def cal_relevance(link1,link2):
     else :
         return 0
 
-#logを取る
+#対数変換
 def cal_log(rel):
     if rel != 0 :
         return math.log10(1/rel)
@@ -92,11 +92,10 @@ if __name__ == '__main__' :
     linklist1=getlink(page1)
     linklist2=getlink(page2)
 
-    #リンク一致度計算
+    #リンク一致度計算(類似度)
     rel=cal_relevance(linklist1,linklist2)
     # print(rel)
 
-    #リンク一致度計算2
+    #リンク一致度計算(距離)
     logrel=cal_log(rel)
     print(logrel)
-    # print(1.0 - rel)

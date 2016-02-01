@@ -101,6 +101,32 @@ $ python3 wiki-relevance-anime-title.py "茅野愛衣" "島本須美"
 wiki-relevance.pyの結果とそんな変わらないように見える。  
 出演作品から類似声優を見つけたいなら、こっちのほうが正確かもしれません。  
 
+##実行結果(追加)
+
+```
+ python3 wiki-relevance.py "悠木碧" "斎藤千和"  
+ 1.166830897936477  
+   
+python3 wiki-relevance.py "悠木碧" "悠木碧"  
+0.0  
+  
+python3 wiki-relevance.py "悠木碧" "喜多村英梨"  
+1.091308325848836  
+  
+python3 wiki-relevance.py "悠木碧" "水橋かおり"  
+1.3140325399303059  
+  
+python3 wiki-relevance.py "杉田智和" "中村悠一"  
+0.9877815541443403  
+  
+python3 wiki-relevance.py "茅野愛衣" "島本須美"  
+1.9128498242810998  
+```
+
+ - 類似度の値が小さかったので対数変換しました。  
+ - 類似度の逆数を対数変換してます。  
+ - 逆数なので声優間の類似度というより、距離(非類似度)となります。  
+ - 見やすくなった気もしないこともない。  
 
 wiki-vc-decate.py
 -------

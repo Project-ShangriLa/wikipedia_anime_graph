@@ -11,7 +11,11 @@ def gethtml(argv):
     title = urllib.parse.quote_plus(argv)
     url='http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles='+title+'&rvprop=content'
     r = requests.get(url)
-    return r.text
+    #wikipediaのページが取ってこれなければエラーを返す
+    if "missing" in r.text :
+        return -1
+    else:
+        return r.text
 
 # linesに本文htmlを1行毎にリストに格納
 def linesget(get):
@@ -86,12 +90,13 @@ if __name__ == '__main__' :
 
     #本文html取得
     page1=gethtml(sys.argv[1])
+    if page1 == (-1) : exit(-1)
     page2=gethtml(sys.argv[2])
+    if page2 == (-1) : exit(-1)
 
     #リンク取得
     linklist1=getlink(page1)
     linklist2=getlink(page2)
-
     #リンク一致度計算(類似度)
     rel=cal_relevance(linklist1,linklist2)
     # print(rel)
@@ -99,3 +104,4 @@ if __name__ == '__main__' :
     #リンク一致度計算(距離)
     logrel=cal_log(rel)
     print(logrel)
+

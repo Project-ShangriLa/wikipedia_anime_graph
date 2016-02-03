@@ -14,7 +14,12 @@ def gethtml(argv):
     title = urllib.parse.quote_plus(argv)
     url='http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles='+title+'&rvprop=content'
     r = requests.get(url)
-    return r.text
+
+    #wikipediaのページが取ってこれなければエラーを返す
+    if "missing" in r.text :
+        return -1
+    else:
+        return r.text
 
 # linesに本文htmlを1行毎にリストに格納
 def linesget(get):
@@ -45,6 +50,13 @@ def getlink(page):
             words.append(tmp)
             tmp=""
     return words
+
+#リンクの数が少なすぎるとエラー
+def linkerror(linklist):
+    if len(linklist) < 350 :
+        return -1
+    else :
+        return 0
 
 #リンク一致度計算
 def cal_relevance(link1,link2):
@@ -83,19 +95,30 @@ def cal_log(rel):
 def wiki_rel_mod(name1,name2):
     lines=[]
     infolines=[]
-    
+
     #本文html取得
     page1=gethtml(name1)
+    if page1 == -1 : return -1
     page2=gethtml(name2)
+    if page2 == -1 : return -1
 
     #リンク取得
     linklist1=getlink(page1)
     linklist2=getlink(page2)
 
+    #リンクの数が少なすぎるとエラー
+    errorflag=linkerror(linklist1)
+    errorflag=linkerror(linklist2)
+
     #リンク一致度計算(類似度)
     rel=cal_relevance(linklist1,linklist2)
-    
+
     #リンク一致度計算(距離)
     logrel=cal_log(rel)
     # print(logrel)
-    return logrel
+
+    if errorflag==0 :
+        return logrel
+    else :
+        print("link num small")
+        return -1

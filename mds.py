@@ -37,14 +37,22 @@ w2 = s[x2]
 for i in range(N):
     print(i,w1*v[i,x1],w2*v[i,x2])
 
+    
 #グラフ描写
 for i in range(N):
     plt.plot(w1*v[i,x1],w2*v[i,x2],'b.')
     #ラベル付け 
     plt.text(w1*v[i,x1],w2*v[i,x2],str(i))
+    
 #描写
 # plt.draw()
 # plt.show()
-#保存  
+#グラフ保存
 filename = "figure/output.png"
 plt.savefig(filename)
+
+#プロット点保存  
+f = open('plot.txt','w')
+for i in range(N):
+    f.write(w1*v[i,x1],w2*v[i,x2])
+f.close()

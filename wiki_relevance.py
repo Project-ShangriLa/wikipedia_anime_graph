@@ -49,9 +49,12 @@ def getlink(page):
 
 #リンク一致度計算
 def cal_relevance(link1,link2):
+    print("num of link1:",len(link1))
+    print("num of link2:",len(link2))
     list_set1 = set(link1)
     list_set2 = set(link2)
 
+    
     # #Jaccard係数
     upper = len(list_set1 & list_set2)
     bottom = len(list_set1 | list_set2)
@@ -79,6 +82,12 @@ def cal_log(rel):
         return math.log10(1/rel)
     else:
         return 0
+
+def reterror(value,arg) :
+    if value == (-1) :
+        print("page not find:",arg)
+        exit(-1)
+    
 #-------main--------------------
 if __name__ == '__main__' :
     lines=[]
@@ -90,9 +99,9 @@ if __name__ == '__main__' :
 
     #本文html取得
     page1=gethtml(sys.argv[1])
-    if page1 == (-1) : exit(-1)
+    reterror(page1,sys.argv[1])
     page2=gethtml(sys.argv[2])
-    if page2 == (-1) : exit(-1)
+    reterror(page2,sys.argv[2])
 
     #リンク取得
     linklist1=getlink(page1)

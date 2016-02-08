@@ -83,7 +83,7 @@ def cal_relevance(link1,link2):
         return float(upper) / bottom
     else :
         return 0
-    
+
 #対数変換
 def cal_log(rel):
     if rel != 0 :
@@ -122,3 +122,18 @@ def wiki_rel_mod(name1,name2):
     else :
         print("link num small")
         return -1
+
+
+#-------main--------------------
+if __name__ == '__main__' :
+    i,j=0,0
+    i,j=i+1,j+1
+    print(i,j)
+    exit(0)
+    #引数処理
+    if len(sys.argv) != 3 :
+        print("arguments error")
+        exit(0)
+
+    logrel=wiki_rel_mod(sys.argv[1],sys.argv[2])
+    print(logrel)

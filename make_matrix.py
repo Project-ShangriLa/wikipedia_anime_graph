@@ -3,7 +3,7 @@
 """
 多次元尺度構成法(MDS)に渡す行列を生成する
 """
-
+#-------------------------------------------------------#
 def set_vc():
     fname="cv_list2.dat"
     try :
@@ -14,17 +14,15 @@ def set_vc():
     except :
         print("cannot be opend")
         exit(-1)
-    #name=["悠木碧","斎藤千和","喜多村英梨","水橋かおり","野中藍","加藤英美里"]
-    #name=["神谷浩史","斎藤千和","堀江由衣","櫻井孝宏","坂本真綾","沢城みゆき","花澤香菜","喜多村英梨","井口裕香"]
     return namelist
 
-
+#-------------------------------------------------------#
 def  write_mat(mat):
     f = open('text.txt','w')
     f.write(mat)
     f.close()
 
-
+#-------------------------------------------------------#
 def make_matrix():
     import numpy as np
     from wiki_relevance_module import wiki_rel_mod

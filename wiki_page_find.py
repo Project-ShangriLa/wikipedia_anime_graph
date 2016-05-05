@@ -11,7 +11,7 @@ import urllib
 import sys
 from wiki_relevance_module import wiki_rel_mod
 from wiki_relevance_module import gethtml
-
+#-------------------------------------------------------#
 def set_vc(argv):
     fname="cv_list.dat"
     fname=argv
@@ -24,13 +24,13 @@ def set_vc(argv):
         print("cannot be opend")
         exit(-1)
     return namelist
-
+#-------------------------------------------------------#
 if __name__ == '__main__' :
-    name=[]
-
     if len(sys.argv) != 2 :
         print("argument error")
         exit(1)
+
+    name=[]
     name=set_vc(sys.argv[1])
     matlen=len(name)
     rel=np.zeros([matlen,matlen], dtype=float)

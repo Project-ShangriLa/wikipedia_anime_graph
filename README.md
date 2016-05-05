@@ -1,4 +1,4 @@
-wiki\_relevance.py (wiki\_relevance\_module.py)
+wiki\_relevance.py
 -------
 
 ##概要

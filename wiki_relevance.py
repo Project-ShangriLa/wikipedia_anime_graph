@@ -1,11 +1,19 @@
-#2つのwikipedia のページの関連度度を求める
-#一致リンクが多いほど関連度が高くなる
 # -*- coding: utf-8 -*-
+"""
+wiki_relevance.pyをモジュール化
+2つのwikipedia のページの関連度度を求める
+一致リンクが多いほど関連度が高くなる
+"""
+
 import sys
 import requests
 import urllib
 import math
 
+#リンクの数の最小値
+LimLink=350
+
+#-------------------------------------------------------#
 # 本文取得
 def gethtml(argv):
     title = urllib.parse.quote_plus(argv)
@@ -16,7 +24,7 @@ def gethtml(argv):
         return -1
     else:
         return r.text
-
+#-------------------------------------------------------#
 # linesに本文htmlを1行毎にリストに格納
 def linesget(get):
     lines=[]
@@ -28,7 +36,7 @@ def linesget(get):
             lines.append(st)
             st=""
     return lines
-
+#-------------------------------------------------------#
 #リンクをリストに格納
 def getlink(page):
     flag=0
@@ -46,15 +54,31 @@ def getlink(page):
             words.append(tmp)
             tmp=""
     return words
+#-------------------------------------------------------#
+#出演作品のページ以前を切り取る
+def cut_lines(lines):
+    applines=""
+    flag=0
+    for line in lines :
+        if '== 出演作品 ==' in line : flag=1
+        if flag==1 :
+            applines += line
+        if "=== OVA ===" in line : break
 
+    return applines
+#-------------------------------------------------------#
+#リンクの数が少なすぎるとエラー
+def linkerror(linklist):
+    if len(linklist) < LimLink :
+        return -1
+    else :
+        return 0
+#-------------------------------------------------------#
 #リンク一致度計算
 def cal_relevance(link1,link2):
-    print("num of link1:",len(link1))
-    print("num of link2:",len(link2))
     list_set1 = set(link1)
     list_set2 = set(link2)
 
-    
     # #Jaccard係数
     upper = len(list_set1 & list_set2)
     bottom = len(list_set1 | list_set2)
@@ -82,35 +106,60 @@ def cal_log(rel):
         return math.log10(1/rel)
     else:
         return 0
+#-------------------------------------------------------#
 
-def reterror(value,arg) :
-    if value == (-1) :
-        print("page not find:",arg)
-        exit(-1)
-    
 #-------main--------------------
-if __name__ == '__main__' :
-    lines=[]
-    infolines=[]
+def wiki_rel_mod(name1,name2,flag):
     #引数処理
     if len(sys.argv) != 3 :
         print("arguments error")
         exit(0)
 
+    lines=[]
+    infolines=[]
+
     #本文html取得
-    page1=gethtml(sys.argv[1])
-    reterror(page1,sys.argv[1])
-    page2=gethtml(sys.argv[2])
-    reterror(page2,sys.argv[2])
+    page1=gethtml(name1)
+    if page1 == -1 : return -1
+    page2=gethtml(name2)
+    if page2 == -1 : return -1
+
+    applines1=[]
+    applines2=[]
+    if flag == "a":
+        #リンク取得を出演アニメに絞る
+        lines1=linesget(page1)
+        lines2=linesget(page2)
+        applines1=cut_lines(lines1)
+        applines2=cut_lines(lines2)
+    else:
+        applines1=page1
+        applines2=page2
 
     #リンク取得
-    linklist1=getlink(page1)
-    linklist2=getlink(page2)
+    linklist1=getlink(applines1)
+    linklist2=getlink(applines2)
+
+    #リンクの数が少なすぎるとエラー
+    errorflag=linkerror(linklist1)
+    errorflag=linkerror(linklist2)
+
     #リンク一致度計算(類似度)
     rel=cal_relevance(linklist1,linklist2)
-    # print(rel)
 
     #リンク一致度計算(距離)
     logrel=cal_log(rel)
-    print(logrel)
+    # print(logrel)
+n
+    if errorflag==0 :
+        return logrel
+    else :
+        print("link num small")
+        return -1
 
+
+#-------main--------------------
+if __name__ == '__main__' :
+    flag="a"
+    logrel=wiki_rel_mod(sys.argv[-2],sys.argv[-1],flag)
+    print(logrel)

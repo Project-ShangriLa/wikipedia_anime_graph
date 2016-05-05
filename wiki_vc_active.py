@@ -5,14 +5,14 @@ import requests
 import urllib
 import numpy as np
 import re
-
+#-------------------------------------------------------#
 # 本文取得
 def gethtml(argv):
     title = urllib.parse.quote_plus(argv)
     url='http://ja.wikipedia.org/w/api.php?format=xml&action=query&prop=revisions&titles='+title+'&rvprop=content'
     r = requests.get(url)
     return r.text
-
+#-------------------------------------------------------#
 # linesに本文htmlを1行毎にリストに格納
 def linesget(get):
     lines=[]
@@ -25,7 +25,7 @@ def linesget(get):
             st=""
     return lines
 
-
+#-------------------------------------------------------#
 #出演作品のページ以前を切り取る
 def cut_lines(lines):
     applines=[]
@@ -36,6 +36,7 @@ def cut_lines(lines):
             applines.append(line)
     return applines
 
+#-------------------------------------------------------#
 #初出演年代を特定
 def get_debut(lines):
     line=""
@@ -55,19 +56,17 @@ def get_debut(lines):
             break
         num+=1
     return year
-
-#-------main--------------------
-if __name__ == '__main__' :
+#-------------------------------------------------------#
+def main():
     #引数処理
     if len(sys.argv) != 2 :
         print("arguments error")
         exit(0)
-    #本文html取得
+
+  #本文html取得
     page=gethtml(sys.argv[1])
-    lines=[]
     lines=linesget(page)
     #出演作品のページ以前を切り取る
-    applines=[]
     applines=cut_lines(lines)
 
     cnt=np.zeros(50)
@@ -89,4 +88,8 @@ if __name__ == '__main__' :
     #表示
     for value in range(i):
         print(year_cnt[value],cnt[value])
+
+#-------main--------------------#
+if __name__ == '__main__' :
+    main()  
 

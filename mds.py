@@ -51,7 +51,7 @@ for i in range(N):
 filename = "figure/output.png"
 plt.savefig(filename)
 
-#プロット点保存  
+#プロット点保存 
 f = open('plot.txt','w')
 for i in range(N):
     f.write(w1*v[i,x1],w2*v[i,x2])

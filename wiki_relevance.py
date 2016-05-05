@@ -11,7 +11,7 @@ import urllib
 import math
 
 #リンクの数の最小値
-LimLink=350
+LimLink=200
 
 #-------------------------------------------------------#
 # 本文取得
@@ -115,17 +115,12 @@ def wiki_rel_mod(name1,name2,flag):
         print("arguments error")
         exit(0)
 
-    lines=[]
-    infolines=[]
-
     #本文html取得
     page1=gethtml(name1)
     if page1 == -1 : return -1
     page2=gethtml(name2)
     if page2 == -1 : return -1
 
-    applines1=[]
-    applines2=[]
     if flag == "a":
         #リンク取得を出演アニメに絞る
         lines1=linesget(page1)
@@ -144,20 +139,17 @@ def wiki_rel_mod(name1,name2,flag):
     errorflag=linkerror(linklist1)
     errorflag=linkerror(linklist2)
 
+    if errorflag == -1 :
+        print("link num small")
+        return -1
+
     #リンク一致度計算(類似度)
     rel=cal_relevance(linklist1,linklist2)
 
     #リンク一致度計算(距離)
     logrel=cal_log(rel)
-    # print(logrel)
-n
-    if errorflag==0 :
-        return logrel
-    else :
-        print("link num small")
-        return -1
 
-
+    return logrel
 #-------main--------------------
 if __name__ == '__main__' :
     flag="a"

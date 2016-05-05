@@ -5,7 +5,8 @@ wiki\_relevance.py
 ２つのwikipediaのページの関連度を計算します。  
 声優同士の関連度の計算が目的。  
 声優以外のワードでも可能?  
-wiki\_relevance\_module.pyはこのプログラムをモジュール化したものです。  
+実行する関数の引数を指定することで、wikipediaのページのすべてのリンクを抽出するか、  
+出演作品(アニメ)に限定し抽出するかを指定できます。  
 
 ##実行
 
@@ -30,34 +31,7 @@ $python3 wiki_relevance.py "声優1" "声優2"
  このプログラムに渡し、解析まで自動化したい。  
  →MDSまでは自動化完了
   
-  
-##実行結果
-
-```
-$ python3 wiki\_relevance.py "悠木碧" "斎藤千和"  
-0.0682800345721694  
-  
-$ python3 wiki\_relevance.py "悠木碧" "悠木碧"  
-1.0  
-  
-$ python3 wiki\_relevance.py "悠木碧" "喜多村英梨"  
-0.08037825059101655  
-  
-$ python3 wiki\_relevance.py "悠木碧" "水橋かおり"  
-0.04866412213740458  
-  
-$ python3 wiki\_relevance.py "杉田智和" "中村悠一"  
-0.1028533510285335  
-  
-$ python3 wiki\_relevance.py "茅野愛衣" "島本須美"  
-0.012263099219620958  
- ```
-
-関連度は低そうな人同士では0.01、関連度が高そうな人同士でも0.1となり、  
-おおよそこのくらいの範囲に収まる模様。  
-関連度の最大値は１になります。  
-  
-  
+   
 ##実行結果(追加)
 
 ```
@@ -82,62 +56,10 @@ $ python3 wiki_relevance.py "茅野愛衣" "島本須美"
 
  - 類似度の値が小さかったので対数変換しました。  
  - 類似度の逆数を対数変換してます。  
- - 逆数なので声優間の類似度というより、距離(非類似度)となります。  
- - 見やすくなった気もしないこともない。  
-  
-  
-  
-  
-  
-wiki\_relevance\_anime\_title.py
--------
+ - 声優同士が似ているほど小さく、似ていないほど大きな値となります。  
+完全一致で0となります。   
 
-##概要
-wiki\_relevance.pyと同様に、２つのwikipediaのページの関連度を計算します。  
-wiki\_relevance.pyでは、本文すべてのリンクを抽出してましたが、  
-本プログラムは抽出リンクを出演作品(アニメ)からのみに限定してます。
 
-##実行
-
-```
-$python3 wiki_relevance_anime_title.py "声優1" "声優2"
-```
-
-声優を2人入力すると、それぞれの関連度を求めます。
-
-##note
-
-- 声優同士の出演作品が被っているほど関連度は大きくなります。  
-- wiki\_relevance\_anime\_title.pyと同様に、そのままでは関連度の値が小さいので規格化したほうが良いかも。  
-
-##実行結果
-
-```
-$ python3 wiki\_relevance\_anime_title.py "悠木碧" "斎藤千和"  
-0.049342105263157895  
-  
-$ python3 wiki\_relevance\_anime_title.py "悠木碧" "悠木碧"  
-1.0  
-  
-$ python3 wiki\_relevance\_anime_title.py "悠木碧" "喜多村英梨"  
-0.0625  
-  
-$ python3 wiki\_relevance\_anime_title.py "悠木碧" "水橋かおり"  
-0.028708133971291867  
-   
-$ python3 wiki\_relevance\_anime_title.py "杉田智和" "中村悠一"  
-0.09064327485380116  
-  
-$ python3 wiki\_relevance\_anime_title.py "茅野愛衣" "島本須美"  
-0.014705882352941176  
-```
-
-wiki\_relevance.pyの結果とそんな変わらないように見える。  
-出演作品から類似声優を見つけたいなら、こっちのほうが正確かもしれません。  
-  
-  
-  
-  
 mds.py
 -------
 
@@ -150,7 +72,7 @@ wiki_relevance.pyの結果を用いています。
 ##モジュール
 - make\_matrix.py
 MDSに必要な行列を計算します。  
-- wiki\_relevance\_module.py
+- wiki\_relevance.py
 声優同士の距離を求めます。  
 
 ##実行例
@@ -235,7 +157,7 @@ $python3 wiki_vc_active.py "声優"
 ##実行結果
  
 ```
-$ python3 wiki\_vc\_decate.py "坂本真綾"  
+$ python3 wiki\_vc\_active.py "坂本真綾"  
 1996.0 4.0  
 1998.0 6.0  
 1999.0 6.0  
@@ -254,7 +176,7 @@ $ python3 wiki\_vc\_decate.py "坂本真綾"
 2013.0 6.0  
 2014.0 11.0
   
-$ python3 wiki\_vc\_decate.py "島本須美"  
+$ python3 wiki\_vc\_active.py "島本須美"  
 1979.0 5.0  
 1980.0 5.0  
 1981.0 1.0  
@@ -291,7 +213,7 @@ $ python3 wiki\_vc\_decate.py "島本須美"
 2012.0 2.0  
 2013.0 4.0  
   
-$ python3 wiki\_vc\_decate.py "茅野愛衣"  
+$ python3 wiki\_vc\_active.py "茅野愛衣"  
 2010.0 3.0  
 2011.0 34.0  
 2012.0 36.0  

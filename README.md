@@ -191,8 +191,9 @@ mds.pyの出力した座標データと声優一覧のデータ(cv_list.dat)をj
 make_json.pyにより出力したデータを参照して、図を描写します。  
 javascriptで描写することで見やすくなりました。  
 拡大縮小できるのが良い。  
-
-<iframe src="node.html" width=900 height=600></iframe>  
+以下のリンクから見れます。  
+<a href="node.html" target="_blank">グラフ</a>
+<!-- <iframe src="node.html" width=900 height=600></iframe>   -->
 
  - 声優間の距離が近い声優ほど近くに配置されます。  
  - twitterフォロワー上位50人を与えて見ました。

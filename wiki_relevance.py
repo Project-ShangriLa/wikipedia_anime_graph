@@ -111,9 +111,9 @@ def cal_log(rel):
 #-------main--------------------
 def wiki_rel_mod(name1,name2,flag):
     #引数処理
-    if len(sys.argv) != 3 :
-        print("arguments error")
-        exit(0)
+    # if len(sys.argv) != 3 :
+    #     print("arguments error")
+    #     exit(0)
 
     #本文html取得
     page1=gethtml(name1)

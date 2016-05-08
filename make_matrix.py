@@ -4,8 +4,7 @@
 多次元尺度構成法(MDS)に渡す行列を生成する
 """
 #-------------------------------------------------------#
-def set_vc():
-    fname="cv_list2.dat"
+def set_vc(fname):
     try :
         #句読点で区切られた名前をlistに格納
         for line in open(fname, 'r'):
@@ -23,26 +22,28 @@ def  write_mat(mat):
     f.close()
 
 #-------------------------------------------------------#
-def make_matrix():
+def make_matrix(fname):
     import numpy as np
-    from wiki_relevance_module import wiki_rel_mod
+    from wiki_relevance import wiki_rel_mod
 
-    name=[]
-    name=set_vc()
+    name=set_vc(fname)
+
     matlen=len(name)
     rel_mat=np.zeros([matlen,matlen], dtype=float)
 
     for i in range(matlen-1):
         for j in range(i,matlen-1):
-            tmp_rel=wiki_rel_mod(name[i],name[j+1])
+            tmp_rel=wiki_rel_mod(name[i],name[j+1],"")
             if tmp_rel == -1 : #エラーが帰ってきたらスキップ
                 print("error name:",name[i],name[j+1])
                 i,j=i-1,j-1
             else :
                 rel_mat[i][j+1] = tmp_rel
                 rel_mat[j+1][i] = rel_mat[i][j+1] #対象行列にする
-    print("matrix:")
-    print(rel_mat)
+    # print("matrix:")
+    # print(rel_mat)
     # write_mat(rel_mat) #行列をファイルに出力
     return rel_mat
-
+#-------------------------------------------------------#
+if __name__ == '__main__' :
+    make_matrix(fname)

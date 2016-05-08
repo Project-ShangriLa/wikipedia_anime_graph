@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style type="text/css">
+      #container {
+      max-width: 1000px;
+      height: 700px;
+      margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="container"></div>
+    <!-- <script src="http://sigmajs.org/js/sigma.min.js"></script> -->
+    <!-- <script src="http://sigmajs.org/js/plugins/sigma.parsers.json.min.js"></script> -->
+
+    <script src="js_plugins/sigmajs/sigma.min.js"></script>
+    <script src="js_plugins/sigmajs/plugins/sigma.parsers.json.min.js"></script>
+
+    <script>
+      sigma.parsers.json('data/nodo_data.json', {
+      container: 'container',
+      settings: {
+      defaultNodeColor: '#ec5148'
+      }
+      });
+    </script>
+  </body>
+</html>
